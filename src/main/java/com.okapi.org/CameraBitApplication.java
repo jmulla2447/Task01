@@ -1,11 +1,10 @@
 package com.okapi.org;
 
 
+import com.okapi.org.model.entity.CMDTYPE;
 import com.okapi.org.service.MatrixService;
-import com.okapi.org.validate.Command;
-import com.okapi.org.validate.impl.AddCommand;
 import com.okapi.org.validate.impl.CommandExecutor;
-import com.okapi.org.validate.impl.FetchCommand;
+import com.okapi.org.validate.impl.CommandFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -24,24 +23,13 @@ public class CameraBitApplication implements CommandLineRunner {
     @Override
     public void run(String[] args) throws IllegalArgumentException {
 
-        if (args.length == 0) {
-            throw new IllegalArgumentException("Command not proper");
+        if (args.length != 0) {
+
+            CommandFactory factory = new CommandFactory(matrixService);
+
+            CommandExecutor executor = new CommandExecutor();
+            executor.executeCommand(factory.createCommand(CMDTYPE.ADD.getCommandType(args[0]), args));
         }
 
-        Command command = null;
-        switch (args[0]) {
-            case "add":
-                command = new AddCommand(args, matrixService);
-                break;
-            case "fetch":
-                command = new FetchCommand(args,matrixService);
-            default:
-                break;
-        }
-
-        CommandExecutor executor = new CommandExecutor();
-        executor.executeCommand(command);
     }
-
-
 }

@@ -16,7 +16,7 @@ public class FetchCommand implements Command {
 
     @Override
     public void execute() {
-
+        matrixService.countItemsFromDatabase();
     }
 
     @Override
