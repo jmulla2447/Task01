@@ -34,7 +34,7 @@ public class AddCommand implements Command {
             matrixService.saveCameraBitMatrixToDatabase(matrix);
             LOG.info("Data imported to the database successfully.");
         } catch (IOException e) {
-            LOG.error("Error reading file: " + e.getMessage());
+            LOG.error("Error {} reading file: {}", e.getMessage(), filePath);
         }
     }
 

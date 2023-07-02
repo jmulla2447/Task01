@@ -10,6 +10,8 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import java.util.Scanner;
+
 @SpringBootApplication
 public class CameraBitApplication implements CommandLineRunner {
 
@@ -23,13 +25,35 @@ public class CameraBitApplication implements CommandLineRunner {
     @Override
     public void run(String[] args) throws IllegalArgumentException {
 
-        if (args.length != 0) {
+        if (args.length > 0) {
 
             CommandFactory factory = new CommandFactory(matrixService);
 
             CommandExecutor executor = new CommandExecutor();
             executor.executeCommand(factory.createCommand(CMDTYPE.ADD.getCommandType(args[0]), args));
         }
+        executeInteractiveMode();
+    }
 
+    private void executeInteractiveMode() {
+        Scanner scanner = new Scanner(System.in);
+
+        while (true) {
+            System.out.println("===============================================");
+            System.out.println("Enter a command (add, fetch) or 'exit' to quit:");
+            System.out.println("===============================================");
+            String input = scanner.nextLine().trim();
+            if (input.contains("exit")) {
+               break;
+            }
+
+            String[] commandArgs = input.split("\\s+");//change in regex
+            String commandName = commandArgs[0];
+            CommandFactory factory = new CommandFactory(matrixService);
+            CommandExecutor executor = new CommandExecutor();
+            executor.executeCommand(factory.createCommand(CMDTYPE.ADD.getCommandType(commandName), commandArgs));
+        }
+        scanner.close();
+        System.exit(1);
     }
 }

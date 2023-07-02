@@ -6,7 +6,7 @@ import java.util.Objects;
 
 public class CommandExecutor {
     public void executeCommand(Command command) {
-        if (!Objects.isNull(command) && !command.validateInput()) {
+        if (Objects.isNull(command) || !command.validateInput()) {
             throw new IllegalArgumentException("Command is not valid");
         }
         command.execute();
