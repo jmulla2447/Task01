@@ -4,7 +4,6 @@ import com.okapi.org.service.MatrixService;
 import com.okapi.org.validate.Command;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -16,20 +15,19 @@ import java.util.List;
 public class AddCommand implements Command {
 
     private final static Logger LOG = LoggerFactory.getLogger(AddCommand.class);
-    @Autowired
     private MatrixService matrixService;
     private static final int REQ_ARGS = 3;
     private String[] inputs;
     public AddCommand() {
     }
-    public AddCommand(String[] args) {
+    public AddCommand(String[] args, MatrixService matrixService) {
         this.inputs = args;
+        this.matrixService = matrixService;
     }
 
     @Override
     public void execute() {
         String filePath = new StringBuilder(inputs[1]).append("/").append(inputs[2]).toString();
-
         try {
             List<String> allLines = Files.readAllLines(Path.of(filePath));
             int[][] matrix = convertMatrix(allLines);
