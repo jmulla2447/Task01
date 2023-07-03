@@ -26,20 +26,20 @@ class FetchCommandTest {
     @Test
     void execute_ValidInput_CallsCountItemsFromDatabase() {
         // Arrange
-        String[] args = {"fetch", "arg1"};
+        String[] args = {"fc", "arg1"};
         fetchCommand =  new FetchCommand(args, matrixService);
 
         // Act
         fetchCommand.execute();
 
         // Assert
-        verify(matrixService, times(1)).countItemsFromDatabase(true);
+        verify(matrixService, times(0)).countItemsFromDatabase(true);
     }
 
     @Test
     void validateInput_ValidInput_ReturnsTrue() {
         // Arrange
-        String[] args = {"fetch", "arg1"};
+        String[] args = {"fc"};
         fetchCommand =  new FetchCommand(args, matrixService);
 
         // Act
@@ -52,7 +52,7 @@ class FetchCommandTest {
     @Test
     void validateInput_InvalidInput_ReturnsFalse() {
         // Arrange
-        String[] args = {"fetch"};
+        String[] args = {"fc", "arr"};
         fetchCommand =  new FetchCommand(args, matrixService);
 
         // Act

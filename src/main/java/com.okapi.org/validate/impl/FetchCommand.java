@@ -23,7 +23,7 @@ public class FetchCommand implements Command {
     @Override
     public void execute() {
         long count  =  matrixService.countItemsFromDatabase(isDiagonal);
-        LOG.info("Total count is {}.", count);
+        LOG.info("Total count for {} Matrix Data is {}.", isDiagonal?"Diagonal":"Orthogoanl", count);
     }
 
     @Override

@@ -1,5 +1,99 @@
 # Java Task with NoSQL Database
 
+## Prerequisites:
+
+* Java version : Java 17
+* Docker for MongoDB : 20.10.24
+* Maven :  3.2.0
+
+### Deployment of the Application:
+1) Docker based MongoDB Deployment:
+* Execute the following command to start a MongoDB container:
+  arduino
+   ```
+   docker run -d -p 27017:27017 --name mongo_db mongo:latest
+   ```
+* From project root directory, execute mvn command that create executable jar file
+   ```
+   mvn clean package
+   ```
+* Once the MongoDB container is running and executable jar file is created, proceed to execute the application.
+   ```
+   java -jar okapi-camera.jar
+   ```
+2) If MongoDB already installed on a separate server(Not as Docker) then inject mongodb instance details using command line argument:
+* Run the application using the following command, providing the path to the application.yml file that contains the MongoDB host, port, and other information
+   ```
+   java -jar -Dspring.config.location=/path/to/application.yml okapi-camera.jar
+   ```
+* Ensure that the application.yml file is correctly configured with the MongoDB connection details for the okapi-camera.jar to establish a connection with the MongoDB server.
+
+### Usage and Example
+Once the MongoDB container is running, proceed to execute the application.
+1) Task1-Part1 add matrix data from file to DB command :
+
+   **CMD Information :** Use the add command followed by the directory path where the camera matrix data file is located, along with the desired file name. This command will insert the data into MongoDB. If the specified directory path or file is not found, an exception will be logged, and the interactive module will prompt for the next input.
+
+   **CMD Syntax :** add <directory_path> <file_name>
+
+   **CMD Argument description :**
+
+   As per above example, add need directory information where data camera matrix data file is present then use data to
+   inserted into MongoDB.
+
+   If directory path or file specified as argument is not present then it log exception and interactive module ask for next
+   input.
+
+   **Output Example :**
+   ```
+      2023-07-03 13:42:02.020  INFO 63319 --- [           main] com.okapi.org.validate.impl.AddCommand   : Enter a command (add, fetch) or 'exit' to quit1 :
+      2023-07-03 13:42:02.020  INFO 63319 --- [           main] com.okapi.org.validate.impl.AddCommand   : ===============================================
+      add /Users/javedmulla/Downloads/Task01/examples example3.data
+   ```
+2) Task1-Part2 Count of items (island of 1's connected orthogonally)
+
+   **CMD Information :** The fo command fetches the orthogonal matrix data.
+
+   **CMD Example :** fo
+
+   **CMD Argument description :**
+   No arguments is required
+
+   **Output Example :**
+   ```
+      2023-07-03 13:43:33.130  INFO 63319 --- [           main] com.okapi.org.validate.impl.AddCommand   : ===============================================
+      fo
+      2023-07-03 13:43:40.735 DEBUG 63319 --- [           main] o.s.data.mongodb.core.MongoTemplate      : find using query: {} fields: Document{{}} for class: class com.okapi.org.model.entity.MatrixEntity in collection: camera_matrix
+      2023-07-03 13:43:40.755  INFO 63319 --- [           main] c.okapi.org.validate.impl.FetchCommand   : Total count for Orthogoanl Matrix Data is 63.
+   ```
+
+3) Task2 vertices of items  (island of 1's connected orthogonally or diagonally)
+
+   **CMD Information :** The fd command fetches the diagonal matrix information.
+
+   **CMD Example :** fd
+
+   **CMD Argument description :**
+   No arguments is required
+   **Output Example :**
+   ```
+      2023-07-03 13:43:09.448  INFO 63319 --- [           main] com.okapi.org.validate.impl.AddCommand   : ===============================================
+      fd
+      2023-07-03 13:43:40.735 DEBUG 63319 --- [           main] o.s.data.mongodb.core.MongoTemplate      : find using query: {} fields: Document{{}} for class: class com.okapi.org.model.entity.MatrixEntity in collection: camera_matrix
+      2023-07-03 13:43:33.130  INFO 63319 --- [           main] c.okapi.org.validate.impl.FetchCommand   : Total count for Diagonal Matrix Data is 43.
+   ```
+4) Exit command
+   **CMD Information :** Used for exit from the application
+
+   **CMD Example :** exit or Exit (lower or caps)
+
+   **CMD Argument description :**
+   No arguments is required
+   **Output Example :**
+   ```
+      2023-07-03 13:43:09.448  INFO 63319 --- [           main] com.okapi.org.validate.impl.AddCommand   : ===============================================
+      exit
+   ```
 ## Intro
 
 * This offline test was created to get a picture of your Java basics, necessary version control with Git as well as some algorithm solving skills.
@@ -79,7 +173,7 @@ Write another method that takes a matrix as in Task 1 as input and **returns a c
 item. Bottom left is `(0,0)` with x indicating the horizontal position and y the vertically position.
 
 **Expected result** based on the sample graph of Task 1:
-```java
+```
 // one line per item
 (2,0), (3,1), (4,1), (4,2)  // item in the bottom right
 (0,1), (0,2), (1,2), (0,3), (1,3), (2,3)  // item in the top left
