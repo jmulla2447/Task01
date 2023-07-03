@@ -33,7 +33,7 @@ class FetchCommandTest {
         fetchCommand.execute();
 
         // Assert
-        verify(matrixService, times(1)).countItemsFromDatabase();
+        verify(matrixService, times(1)).countItemsFromDatabase(true);
     }
 
     @Test

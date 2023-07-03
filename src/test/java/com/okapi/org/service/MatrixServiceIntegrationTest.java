@@ -32,7 +32,7 @@ public class MatrixServiceIntegrationTest {
        // matrixService.saveCameraBitMatrixToDatabase(matrix);
 
         // Assert
-        int countItems = matrixService.countItemsFromDatabase();
+        int countItems = matrixService.countItemsFromDatabase(true);
         assertEquals(8, countItems);
     }
 
@@ -50,7 +50,7 @@ public class MatrixServiceIntegrationTest {
         matrixRepository.save(matrixEntity2);
 
         // Act
-        int itemCount = matrixService.countItemsFromDatabase();
+        int itemCount = matrixService.countItemsFromDatabase(true);
 
         // Assert
         assertEquals(8, itemCount);

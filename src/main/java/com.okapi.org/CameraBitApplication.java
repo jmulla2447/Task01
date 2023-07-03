@@ -37,7 +37,7 @@ public class CameraBitApplication implements CommandLineRunner {
             CommandFactory factory = new CommandFactory(matrixService);
 
             CommandExecutor executor = new CommandExecutor();
-            executor.executeCommand(factory.createCommand(CMDTYPE.ADD.getCommandType(args[0]), args));
+            executor.executeCommand(factory.createCommand(CMDTYPE.getCommandType(args[0]), args));
         }
         executeInteractiveMode();
     }
@@ -60,7 +60,7 @@ public class CameraBitApplication implements CommandLineRunner {
             CommandFactory factory = new CommandFactory(matrixService);
             CommandExecutor executor = new CommandExecutor();
             try {
-                executor.executeCommand(factory.createCommand(CMDTYPE.ADD.getCommandType(commandName), commandArgs));
+                executor.executeCommand(factory.createCommand(CMDTYPE.getCommandType(commandName), commandArgs));
             } catch (IllegalArgumentException e){
                 LOG.info("exception recorded : {}", e.getMessage());
             }

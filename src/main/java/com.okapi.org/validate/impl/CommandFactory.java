@@ -16,7 +16,11 @@ public class CommandFactory {
         switch (commandType) {
             case ADD:
                 return new AddCommand(args, matrixService);
-            case FETCH:
+            case FETCH_DIA:
+                args[args.length - 1] = "true";
+                return new FetchCommand(args, matrixService);
+            case FETCH_ORTHO:
+                args[args.length - 1] = "false";
                 return new FetchCommand(args, matrixService);
             default:
                 //return new HelpCommand("Invalid command: " + commandType);

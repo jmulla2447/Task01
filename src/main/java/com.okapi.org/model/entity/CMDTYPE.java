@@ -1,7 +1,7 @@
 package com.okapi.org.model.entity;
 
 public enum CMDTYPE {
-    ADD("add"), FETCH("fetch"), NONE("");
+    ADD("add"), FETCH_DIA("fd"), FETCH_ORTHO("fo"), NONE("Command not identified");
 
     private final String info;
 
@@ -13,7 +13,7 @@ public enum CMDTYPE {
         return info;
     }
 
-    public CMDTYPE getCommandType(String info){
+    public static CMDTYPE getCommandType(String info){
         for(CMDTYPE cmdtype: CMDTYPE.values()){
             if(info.equals(cmdtype.getInfo())){
                 return cmdtype;
