@@ -31,8 +31,22 @@ public class ItemCounter {
         IntStream.range(0, numRows)
                 .forEach(row -> IntStream.range(0, numCols)
                         .filter(col -> matrix[row][col] == 1 && !visited[row][col])
-                        .forEach(col -> allItems.add(strategy.exploreItem(matrix, visited, row, col, new ArrayList<Vertex>()))));
+                        .forEach(col -> allItems.add(strategy.exploreItem(matrix, visited, row, col, new ArrayList<>()))));
 
         return allItems.size();
+    }
+
+    public List<List<Vertex>>  fetchItems(int[][] matrix) {
+        int numRows = matrix.length;
+        int numCols = matrix[0].length;
+        boolean[][] visited = new boolean[numRows][numCols];
+        List<List<Vertex>> allItems = new ArrayList<>();
+
+        IntStream.range(0, numRows)
+                .forEach(row -> IntStream.range(0, numCols)
+                        .filter(col -> matrix[row][col] == 1 && !visited[row][col])
+                        .forEach(col -> allItems.add(strategy.exploreItem(matrix, visited, row, col, new ArrayList<>()))));
+
+        return allItems;
     }
 }
